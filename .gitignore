@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+media/
+static/
+000*
+db*
+image_index.csv
