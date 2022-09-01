@@ -4,6 +4,6 @@ Place this folder next to the images folder
 
 pip install -r requirements.txt
 
-python index.py --dataset ../<مسیر دایرکتوری تصاویر ما> --index image_index.csv
+python index.py --dataset <path directory images> --index image_index.csv
 
-python search.py --index image_index.csv --query <مسیر تصویر مدنظر برای سرچ> --result-path dataset
+python search.py --index image_index.csv --query <path image for search> --result-path dataset
