@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'imagesearch',
     'rest_framework',
+    'django_crontab',
+
 ]
 
 MIDDLEWARE = [
@@ -126,3 +128,9 @@ MEDIA_ROOT = os.path.join('media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CRONJOBS = [
+    ('*/15 * * * *', 'imagesearch.cron.image_indexing_job')
+]
+

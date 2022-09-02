@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from django.db.models import Case, When
 from django.conf import settings
 from .models import Image
+from uuid import uuid4
 import argparse
 import cv2
 import os
@@ -23,14 +24,16 @@ def image_search(request):
         
         return Response(serializer, status=200)
 
-
     if request.method == 'POST':
         serializer = ImageSerializer(data=request.data)
         
         if serializer.is_valid():
             img = serializer.initial_data['image']
-        
-            user_data_path = os.path.join(settings.BASE_DIR, 'image_search_engine', 'user_data', str(img))
+
+            pre, form = str(img).split('.')
+            new_name  = f"{pre}-{uuid4()}.{form}"
+
+            user_data_path = os.path.join(settings.BASE_DIR, 'image_search_engine', 'user_data', str(new_name))
 
             with open(user_data_path, 'wb') as udp:
                 image = img.read()
@@ -46,13 +49,11 @@ def image_search(request):
             searcher = Searcher(indexPath)
             similiar_image = searcher.search(features)
 
-
             image_name_list = [rst[1].split('/')[1] for rst in similiar_image]
 
             preserved = Case(*[When(image=field, then=position) for position, field in enumerate(image_name_list)])
             results = Image.objects.filter(image__in = image_name_list).order_by(preserved)
             
-
             srz = ImageListSerializer(results, many=True)
 
             return Response(srz.data, status=200)

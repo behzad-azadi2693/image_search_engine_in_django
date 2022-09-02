@@ -23,7 +23,7 @@ def test(imagePath):
 	for imagePath in glob.glob(imagePath + "/*", recursive=True):
 		if os.path.isfile(imagePath):
 			# استخراج آدرس یکتا برای هر عکس
-			imageID = imagePath[imagePath.find(".") + 3:]
+			imageID = imagePath[imagePath.find("/") + 1:]
 			print(imageID)
 		    # مسیر و لود کردن خود تصویر
 			image = cv2.imread(imagePath)
