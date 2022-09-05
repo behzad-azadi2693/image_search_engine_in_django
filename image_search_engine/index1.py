@@ -13,7 +13,11 @@ output = open('image_index.csv', "w")
 with open('write_path.txt', 'r') as file_in:
 	list_path_image = []
 	for line in file_in:
-		list_path_image.append(line.replace('\n', ''))
+        	check_path = line.replace('\n', '')
+        	if os.path.isfile(check_path):
+    	    		list_path_image.append(check_path)
+        	else:
+            		pass
 
 
 # گرفتن مسیر تصاویر و حلقه بر روی آنها
