@@ -50,6 +50,7 @@ def image_search(request):
             similiar_image = searcher.search(features)
 
             image_name_list = [rst[1].split('/')[1] for rst in similiar_image]
+            #image_name_list = [os.path.join(*(rst[1].split('/')[-2::])) for rst in similiar_image]
 
             preserved = Case(*[When(image=field, then=position) for position, field in enumerate(image_name_list)])
             results = Image.objects.filter(image__in = image_name_list).order_by(preserved)
